@@ -35,7 +35,7 @@ public:
     {
         state = state_t::RUNNING;
         timer_interval = 2.0;
-        timer_running = 15.0;
+        timer_running = 20.0;
         fireArrow();
     }
 
@@ -138,6 +138,7 @@ public:
             {
                 if (state == state_t::ENDING)
                 {
+                    cube.clear();
                     state = state_t::INACTIVE;
                 }
                 // Fire another arrow
@@ -147,6 +148,12 @@ public:
                 }
             }
         }
+    }
+
+    void end()
+    {
+        state = state_t::ENDING;
+        cube.clear();
     }
 };
 

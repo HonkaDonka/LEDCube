@@ -20,23 +20,21 @@ private:
   float fade_in_speed;
   // Amount of time it takes to fade out a pixel to min
   float fade_out_speed;
-  // Brightness of the pixels
-  uint8_t brightness;
 
 public:
   void init()
   {
-    // TODO: Make these configurable
     fade_in_speed = 5;
     fade_out_speed = 9;
     state = state_t::RUNNING;
     timer_interval = 0.05;
-    timer_running = 15.0;
-    brightness = 255;
+    timer_running = 20.0;
   }
 
   void draw(float dt)
   {
+
+    uint8_t brightness = 255;
 
     uint8_t pixels_active = 0;
     // Fade in/out each pixel

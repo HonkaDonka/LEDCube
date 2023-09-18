@@ -16,7 +16,7 @@ public:
     void init()
     {
         state = state_t::RUNNING;
-        timer_running = 15.0;
+        timer_running = 20.0;
     }
 
     void draw(float dt)
