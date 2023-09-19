@@ -35,6 +35,7 @@ char ssid[] = WIFI_SSID;
 char pass[] = WIFI_PASS;
 
 #define SKIPPIN V0
+#define BACKPIN V1
 
 void setup()
 {
@@ -102,6 +103,7 @@ BLYNK_WRITE(SKIPPIN)
     for (int i = 0; i < numAnimations; i++)
     {
       Graphics &animation = *Animations[i];
+
       if (animation.state != state_t::INACTIVE)
       {
         animation.end();
@@ -109,5 +111,31 @@ BLYNK_WRITE(SKIPPIN)
     }
 
     Blynk.virtualWrite(SKIPPIN, 0);
+  }
+}
+
+BLYNK_WRITE(BACKPIN)
+{
+  if (param.asInt())
+  {
+    Graphics &animation = *Animations[currentAnim];
+
+    if (animation.state != state_t::INACTIVE)
+    {
+      animation.end();
+    }
+
+    if (currentAnim - 1 < 0)
+    {
+      currentAnim = numAnimations - 1;
+
+      Graphics &animation = *Animations[currentAnim];
+
+      animation.init();
+    } else {
+      currentAnim -= 2;
+    }
+
+    Blynk.virtualWrite(BACKPIN, 0);
   }
 }
