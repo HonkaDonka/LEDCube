@@ -36,6 +36,9 @@ private:
     int hue16 = 0;
 
 public:
+
+    
+
     void init()
     {
         state = state_t::STARTING;

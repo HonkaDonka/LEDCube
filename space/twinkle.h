@@ -22,6 +22,9 @@ private:
   float fade_out_speed;
 
 public:
+
+  
+
   void init()
   {
     fade_in_speed = 5;

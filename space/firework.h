@@ -31,6 +31,9 @@ private:
     Noise noise;
 
 public:
+
+    
+
     void init()
     {
         state = state_t::RUNNING;
