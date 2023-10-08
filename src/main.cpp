@@ -14,12 +14,14 @@
 #include <../space/ripple.h>
 #include <../space/firework.h>
 #include <../space/plasma.h>
+#include <../space/text.h>
 
 // Animations
 Twinkle twinkle;
 Ripple ripple;
 Firework firework;
 Plasma plasma;
+Text text;
 
 Graphics *Animations[] = {&twinkle, &plasma, &ripple, &firework};
 
@@ -43,44 +45,52 @@ char pass[] = WIFI_PASS;
 
 void setup()
 {
-  WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-  }
-  Blynk.config(auth);
-  Blynk.connect();
+  // WiFi.begin(ssid, pass);
+  // while (WiFi.status() != WL_CONNECTED)
+  // {
+  // }
+  // Blynk.config(auth);
+  // Blynk.connect();
 
   Serial.begin(9600);
   // while (!Serial){}
   cube.begin();
   cube.setBrightness(20);
   cube.clear();
+
+  text.init();
+
+
 }
 
 void loop()
 {
-  Blynk.run();
+  // Blynk.run();
 
-  uint8_t activeAnims = 0;
+  // uint8_t activeAnims = 0;
 
-  for (int i = 0; i < numAnimations; i++)
-  {
-    Graphics &animation = *Animations[i];
-    if (animation.state != state_t::INACTIVE)
-    {
-      animation.draw(0.05);
-    }
+  // for (int i = 0; i < numAnimations; i++)
+  // {
+  //   Graphics &animation = *Animations[i];
+  //   if (animation.state != state_t::INACTIVE)
+  //   {
+  //     animation.draw(0.05);
+  //   }
 
-    if (animation.state != state_t::INACTIVE)
-    {
-      activeAnims++;
-    }
-  }
+  //   if (animation.state != state_t::INACTIVE)
+  //   {
+  //     activeAnims++;
+  //   }
 
-  if (activeAnims == 0)
-  {
-    playNext();
-  }
+
+  // }
+
+  // if (activeAnims == 0)
+  // {
+  //   playNext();
+  // }
+
+  text.draw(0.5);
 
   cube.show();
 }

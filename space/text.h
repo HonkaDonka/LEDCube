@@ -1,5 +1,5 @@
-#ifndef FIREWORK_h
-#define FIREWORK_h
+#ifndef TEXT_h
+#define TEXT_h
 
 #include "Arduino.h"
 #include "../power/graphics.h"
@@ -23,15 +23,18 @@ private:
     // Time the animation lasts
     Timer timer_ending;
 
-    String text = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String text = "A";
 
 public:
     void init()
     {
         state = state_t::STARTING;
-        timer_starting = 0;
-        timer_running = 0;
-        timer_ending = 0;
+        timer_starting = 0.5;
+        timer_running = 30;
+        timer_ending = 2;
+        radius = 2;
+        text_rotation = -90;
+        text_rotation_speed = 45;
     }
 
     void set_text(String s) { text = s; }
@@ -84,7 +87,7 @@ public:
         // Amount of pixels the text has been rotated
         float pixel_start = text_rotation / line_angle_adj;
         // Start of the line_angle at a bit over 90 degrees
-        float line_angle = 90.01f;
+        float line_angle = 90;
         // Fine adjustment for angles between lines.
         // Ignore because this will add a lot of jittering.
         // line_angle += fmod(text_rotation, line_angle_adj);
@@ -114,9 +117,17 @@ public:
                     uint32_t data = chars_data[t][y * CHARS_FRAME_WIDTH + x];
                     if (data & 0xff000000)
                     {
-                        Color c = Color(data & 0xff, data >> 8 & 0xff, data >> 16 & 0xff);
-                        Vector3 pixel = q.rotate(Vector3(x / 15.0f, 0, -1) * radius);
-                        pixel += Vector3(-radius / 2, -radius / 2, radius / 2);
+                        Color c = Color(100, 100, 100);
+                        // Vector3 pixel = q.rotate(Vector3(x / 15.0f, 0, -1) * radius);
+                        Vector3 pixel = q.rotate(Vector3(0, 0, 0));
+                        // pixel += Vector3(-radius / 2, -radius / 2, radius / 2);
+                        Serial.print(pixel.x);
+                        Serial.print(" ");
+                        Serial.print(pixel.y);
+                        Serial.print(" ");
+                        Serial.print(pixel.z);
+                        Serial.println();
+
                         setLED(pixel, c.scale(brightness).gamma());
                     }
                 }
@@ -131,6 +142,12 @@ public:
             return chr - ' ';
         else
             return '#' - ' ';
+    }
+
+    void end()
+    {
+        state = state_t::ENDING;
+        timer_ending.reset();
     }
 };
 
