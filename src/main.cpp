@@ -90,11 +90,7 @@ void loop()
   //   playNext();
   // }
 
-  cube.fillScreen(0);
-  cube.setCursor(5, 0);
-  cube.print(F("Howdy"));
-
-  // text.draw(0.5);
+  text.draw(0.5);
 
   cube.show();
 }

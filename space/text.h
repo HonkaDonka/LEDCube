@@ -23,7 +23,7 @@ private:
     // Time the animation lasts
     Timer timer_ending;
 
-    String text = "A";
+    String text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#%'()+,-./:;<>=?";
 
 public:
     void init()
@@ -137,11 +137,17 @@ public:
 
         for (uint8_t x = 0; x < CHARS_FRAME_WIDTH; x++) {
             for (uint8_t y = 0; y < CHARS_FRAME_HEIGHT; y++) {
-                uint32_t data = chars_data[match_char(text.charAt(0))][y * CHARS_FRAME_WIDTH + x];
+                Serial.print("x");
+                Serial.print(x);
+                Serial.print("y");
+                Serial.print(y);
+                uint32_t data = chars_data[match_char(text[0])][y * CHARS_FRAME_WIDTH + x];
+                Serial.print("textmatch");
+                Serial.println(match_char(text[0]));
                 if (data & 0xff000000) {
                     Color c = Color(100, 100, 100);
-                    Vector3 pixel = Vector3(x / 15.0f, 0, -1) * radius;
-                    setLED(pixel, c.scale(brightness).gamma());
+                    Vector3 pixel = Vector3(x, y, 0);
+                    setLED(pixel, c);
                 }
             }
         }
@@ -149,10 +155,11 @@ public:
 
     uint16_t match_char(uint16_t chr)
     {
-        if (chr >= ' ' && chr <= 'Z')
-            return chr - ' ';
-        else
-            return '#' - ' ';
+        if (chr >= 'A' && chr <= '?') {
+            return chr;
+        } else {
+            return ' ';
+        }
     }
 
     void end()
@@ -161,5 +168,4 @@ public:
         timer_ending.reset();
     }
 };
-
 #endif
