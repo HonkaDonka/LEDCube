@@ -141,7 +141,9 @@ public:
                 Serial.print(x);
                 Serial.print("y");
                 Serial.print(y);
-                uint32_t data = chars_data[match_char(text[0])][y * CHARS_FRAME_WIDTH + x];
+                uint32_t data = chars_data[match_char(text[1])][y * CHARS_FRAME_WIDTH + x];
+                Serial.print("text");
+                Serial.println(text[1]);
                 Serial.print("textmatch");
                 Serial.println(match_char(text[0]));
                 if (data & 0xff000000) {
@@ -156,9 +158,15 @@ public:
     uint16_t match_char(uint16_t chr)
     {
         if (chr >= 'A' && chr <= '?') {
-            return chr;
+            Serial.print("chr");
+            Serial.print(chr);
+            Serial.print("chr - ' '");
+            Serial.println(chr - ' ');
+            return chr - ' ';
         } else {
-            return ' ';
+            Serial.print(' ' - ' ');
+            Serial.println(" ");
+            return ' ' - ' ';
         }
     }
 
