@@ -141,11 +141,11 @@ public:
                 Serial.print(x);
                 Serial.print("y");
                 Serial.print(y);
-                uint32_t data = chars_data[match_char(text[1])][y * CHARS_FRAME_WIDTH + x];
                 Serial.print("text");
                 Serial.println(text[1]);
                 Serial.print("textmatch");
                 Serial.println(match_char(text[0]));
+                uint32_t data = chars_data[match_char(text[1])][y * CHARS_FRAME_WIDTH + x];
                 if (data & 0xff000000) {
                     Color c = Color(100, 100, 100);
                     Vector3 pixel = Vector3(x, y, 0);
@@ -157,7 +157,13 @@ public:
 
     uint16_t match_char(uint16_t chr)
     {
-        if (chr >= 'A' && chr <= '?') {
+        // TODO: Reformat chars_data to match ASCII values
+        Serial.print("chr");
+        Serial.println(chr);
+        Serial.print("chr - ' '");
+        Serial.println(chr - ' ');
+
+        if (chr >= ' ' && chr <= 'Z') {
             Serial.print("chr");
             Serial.print(chr);
             Serial.print("chr - ' '");
