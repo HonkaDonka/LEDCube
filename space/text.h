@@ -37,11 +37,15 @@ public:
         text_rotation_speed = 45;
     }
 
-    void set_text(String s) { text = s; }
+    void set_text(String s) { text = s;}
 
     void draw(float dt)
     {
         uint8_t brightness = 255;
+
+        // Map the sides of the cube to a 2D array
+        // Shift the array to the left by 1 every tick of timer_interval
+        // Add new lines at 4, 4, x, where x is 1-5.
 
         // if (state == state_t::STARTING)
         // {
