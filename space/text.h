@@ -23,7 +23,7 @@ private:
     // Time the animation lasts
     Timer timer_ending;
 
-    String text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#%'()+,-./:;<>=?";
+    String text = "HELLO WORLD";
 
 public:
     void init()
@@ -137,15 +137,8 @@ public:
 
         for (uint8_t x = 0; x < CHARS_FRAME_WIDTH; x++) {
             for (uint8_t y = 0; y < CHARS_FRAME_HEIGHT; y++) {
-                Serial.print("x");
-                Serial.print(x);
-                Serial.print("y");
-                Serial.print(y);
-                Serial.print("text");
-                Serial.println(text[1]);
-                Serial.print("textmatch");
                 Serial.println(match_char(text[0]));
-                uint32_t data = chars_data[match_char(text[1])][y * CHARS_FRAME_WIDTH + x];
+                uint32_t data = chars_data[match_char(text[0])][y * CHARS_FRAME_WIDTH + x];
                 if (data & 0xff000000) {
                     Color c = Color(100, 100, 100);
                     Vector3 pixel = Vector3(x, y, 0);
@@ -157,22 +150,11 @@ public:
 
     uint16_t match_char(uint16_t chr)
     {
-        // TODO: Reformat chars_data to match ASCII values
-        Serial.print("chr");
-        Serial.println(chr);
-        Serial.print("chr - ' '");
-        Serial.println(chr - ' ');
-
+        // Return ASCII Values - 32 for the index of the character in the charset
         if (chr >= ' ' && chr <= 'Z') {
-            Serial.print("chr");
-            Serial.print(chr);
-            Serial.print("chr - ' '");
-            Serial.println(chr - ' ');
             return chr - ' ';
         } else {
-            Serial.print(' ' - ' ');
-            Serial.println(" ");
-            return ' ' - ' ';
+            return '#' - ' ';
         }
     }
 
