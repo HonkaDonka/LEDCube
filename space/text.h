@@ -45,14 +45,9 @@ public:
     {
         uint8_t brightness = 255;
 
-        // Map the sides of the cube to a 2D array
-        // Shift the array to the left by 1 every tick of timer_interval
-        // Add new lines at 4, 4, x, where x is 1-5.
-        // Matrix transpose
-
         for (uint8_t x = 0; x < CHARS_FRAME_WIDTH; x++) {
             for (uint8_t y = 0; y < CHARS_FRAME_HEIGHT; y++) {
-                uint32_t data = chars_data[match_char(text[0])][y * CHARS_FRAME_WIDTH + x];
+                uint32_t data = chars_data[match_char(text[text_index])][y * CHARS_FRAME_WIDTH + x];
                 if (data & 0xff000000) {
                     Color c = Color(100, 100, 100);
 
@@ -70,7 +65,21 @@ public:
             }
 
             // Rotate the matrix clockwise for each layer
-            for (uint8_t y = 0; y < 5; y++) {
+            rotate_matrix();
+        }
+
+        // for (uint8_t y = 0; y < 5; y++) {
+        //     colors[4][4][y] = Color::BLACK;
+        //     setLED(4, 4, y, Color::BLACK);
+        // }
+
+        // rotate_matrix();
+
+        // text_index++;
+    }
+
+    void rotate_matrix() {
+        for (uint8_t y = 0; y < 5; y++) {
                 int m = 5, n = 5;
 
                 int row = 0, col = 0;
@@ -131,7 +140,6 @@ public:
                     }
                 }        
             }
-        }
     }
 
     void set_text(String s) { text = s;}
