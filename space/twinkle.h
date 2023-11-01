@@ -21,6 +21,11 @@ private:
   // Amount of time it takes to fade out a pixel to min
   float fade_out_speed;
 
+  // Store all the colors and times for each pixel
+  Color colors[5][5][5];
+  // Store the times each pixel was active
+  float times[5][5][5];
+
 public:
 
   
