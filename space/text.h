@@ -8,84 +8,84 @@
 class Text : public Graphics
 {
 private:
+    // Time between each frame
     Timer timer_interval;
     // Time the animation lasts
     Timer timer_running;
 
-    Timer timer_starting;
-    // Time between each firework
-    // Time the animation lasts
-    Timer timer_ending;
-
-    String text = "ELLO WORLD";
-
-    int text_index = 0;
-
+    String text = "HELLO WORLD!  ";
+    // Current state of the animation
+    int text_index;
+    int x_offset;
+    bool add_blank = false;
+    // Store all the colors for each pixel
     Color colors[5][5][5];
 
 public:
     void init()
     {
         state = state_t::STARTING;
-        timer_starting = 0.5;
         timer_running = 30;
-        timer_ending = 2;
-
-        timer_interval = 1.0;
-
-        for (uint8_t y = 0; y < 5; y++)
-        {
-            colors[4][0][y] = Color::WHITE;
-            setLED(4, 0, y, Color::WHITE);
-        }
+        text_index = 0;
+        x_offset = 0;
+        timer_interval = 0.2;
     }
 
     void draw(float dt)
     {
-        uint8_t brightness = 255;
+        if (timer_interval.update())
+        {
+            // Add a blank after every new letter
+            if (add_blank == false) {
+                // Clear everything in the back of the cube
+                for (uint8_t y = 0; y < 5; y++)
+                {
+                    colors[4][0][y] = Color::BLACK;
+                    setLED(4, 0, y, Color::BLACK);
+                }
 
-        // int x_offset = 0;
+                set_line();
+                rotate_matrix();
 
-        // while (x_offset < 5)
-        // {
-        //     if (timer_interval.update())
-        //     {
-        //         for (uint8_t y = 0; y < CHARS_FRAME_HEIGHT; y++)
-        //         {
-        //             uint32_t data = chars_data[match_char(text[text_index])][y * CHARS_FRAME_WIDTH + x_offset];
-        //             if (data & 0xff000000)
-        //             {
-        //                 Color c = Color(100, 100, 100);
+                if (x_offset + 1 >= 5)
+                {
+                    x_offset = 0;
 
-        //                 // Flip the y coordinate so that it is upright
-        //                 Vector3 pixel = Vector3(4, 4, -y + 4);
-        //                 colors[4][4][-y + 4] = c;
-        //                 setLED(pixel, c);
-        //             }
-        //         }
+                    if (text_index < text.length() - 1)
+                    {
+                        text_index++;
+                    }
+                    else
+                    {
+                        text_index = 0;
+                    }
+                    add_blank = true;
+                }
+                else
+                {
+                    x_offset++;
+                }
+            } else {
+                rotate_matrix();
+                add_blank = false;
+            }
+        }
+    }
 
-        //         // Delete row before corner before rotating
-        //         for (uint8_t y = 0; y < 5; y++)
-        //         {
-        //             colors[4][3][y] = Color::BLACK;
-        //             setLED(4, 3, y, Color::BLACK);
-        //         }
+    void set_line()
+    {
+        for (uint8_t y = 0; y < CHARS_FRAME_HEIGHT; y++)
+        {
+            uint32_t data = chars_data[match_char(text[text_index])][y * CHARS_FRAME_WIDTH + x_offset];
+            if (data & 0xff000000)
+            {
+                Color c = Color(255, 255, 255);
 
-        //         // Rotate the matrix clockwise for each layer
-                // rotate_matrix();
-                // x_offset++;
-            // }
-        // }
-        // for (uint8_t y = 0; y < 5; y++) {
-        //     colors[4][4][y] = Color::BLACK;
-        //     setLED(4, 4, y, Color::BLACK);
-        // }
-
-        // rotate_matrix();
-
-        // text_index++;
-        if (timer_interval.update()) {
-            rotate_matrix();
+                // Flip the y coordinate so that it is upright
+                Vector3 pixel = Vector3(4, 4, -y + 4);
+                colors[4][4][-y + 4] = c;
+                setLED(pixel, c);
+            }
         }
     }
 
@@ -159,7 +159,7 @@ public:
         }
     }
 
-    void set_text(String s) { text = s; }
+    void set_text(String s) { text = s + "  "; }
 
     uint16_t match_char(uint16_t chr)
     {
@@ -177,7 +177,6 @@ public:
     void end()
     {
         state = state_t::ENDING;
-        timer_ending.reset();
     }
 };
 #endif
