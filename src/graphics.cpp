@@ -9,9 +9,9 @@
 #define PIXEL_PIN D6
 
 extern Adafruit_NeoMatrix cube = Adafruit_NeoMatrix(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, 1, PIXEL_PIN,
-                                             NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
-                                                 NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG,
-                                             NEO_RGB + NEO_KHZ800);
+                                                    NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
+                                                        NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG,
+                                                    NEO_RGB + NEO_KHZ800);
 
 state_t state = state_t::INACTIVE;
 

@@ -4,8 +4,9 @@
 #include "color.h"
 #include "math3D.h"
 
-class Particle {
- public:
+class Particle
+{
+public:
   Vector3 position = Vector3(0, 0, 0);
   Vector3 velocity = Vector3(0, 0, 0);
 
@@ -20,7 +21,7 @@ class Particle {
            uint8_t h = 0, float b = 1.0f, float s = 1.0f)
       : position(p), velocity(v), hue(h), brightness(b), seconds(s) {}
 
-  Particle& move(const float dt);
-  Particle& move(const float dt, const Vector3 gravity);
+  Particle &move(const float dt);
+  Particle &move(const float dt, const Vector3 gravity);
 };
 #endif

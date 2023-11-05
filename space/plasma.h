@@ -17,19 +17,20 @@ private:
 
     float speed_offset;
     float speed_offset_speed;
-    // scale_p represents the distance between each pixel in the noise map
+    // Scale_p represents the distance between each pixel in the noise map
     float scale_p;
-    // speed is how fast the movement is over the axis in the noise map
+    // Speed is how fast the movement is over the axis in the noise map
     float speed_x;
     float speed_y;
     float speed_z;
     float speed_w;
 
-    // start somewhere in the noise map
+    // Start somewhere in the noise map
     float noise_x = noise.nextRandom(0, 255);
     float noise_y = noise.nextRandom(0, 255);
     float noise_z = noise.nextRandom(0, 255);
     float noise_w = noise.nextRandom(0, 255);
+    
     // Allocate noise memory
     uint8_t noise_map[5][5][5];
 

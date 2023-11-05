@@ -16,8 +16,9 @@
  * if the next alarm threshold has passed since last call to update, otherwise
  * returns zero.
  *----------------------------------------------------------------------------*/
-class Timer {
- public:
+class Timer
+{
+public:
   Timer();
   Timer(const float alarm);
   Timer(const float alarm, const float ratio, const bool inversed);
@@ -33,7 +34,7 @@ class Timer {
   float run_time() const;
   float set_time() const;
 
- private:
+private:
   void update_internals();
   // alarm time in microseconds
   unsigned long m_alarmTime = 0;

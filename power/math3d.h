@@ -14,58 +14,59 @@
  *
  * The length = sqrt(x*x + y*y + z*z)
  *----------------------------------------------------------------------------*/
-class Vector3 {
- public:
+class Vector3
+{
+public:
   static const Vector3 X;
   static const Vector3 Y;
   static const Vector3 Z;
 
- public:
+public:
   float x, y, z;
 
- public:
+public:
   // constructors
   Vector3();
   Vector3(float x, float y, float z);
-  Vector3(const Vector3& v);
+  Vector3(const Vector3 &v);
 
   // moving
-  Vector3 operator+(const Vector3& v) const;
-  Vector3 operator-(const Vector3& v) const;
-  Vector3& operator+=(const Vector3& v);
-  Vector3& operator-=(const Vector3& v);
+  Vector3 operator+(const Vector3 &v) const;
+  Vector3 operator-(const Vector3 &v) const;
+  Vector3 &operator+=(const Vector3 &v);
+  Vector3 &operator-=(const Vector3 &v);
   // negate
   Vector3 operator-() const;
 
   // scaling
   Vector3 operator*(float s) const;
   Vector3 operator/(float s) const;
-  Vector3& operator*=(float s);
-  Vector3& operator/=(float s);
+  Vector3 &operator*=(float s);
+  Vector3 &operator/=(float s);
 
   // cross product
-  Vector3 cross(const Vector3& v) const;
-  Vector3 operator*(const Vector3& v) const;
-  Vector3& operator*=(const Vector3& v);
+  Vector3 cross(const Vector3 &v) const;
+  Vector3 operator*(const Vector3 &v) const;
+  Vector3 &operator*=(const Vector3 &v);
 
   // dot product
-  float dot(const Vector3& v) const;
-  float operator%(const Vector3& v) const;
+  float dot(const Vector3 &v) const;
+  float operator%(const Vector3 &v) const;
 
   // unit vector
-  Vector3& normalize();
+  Vector3 &normalize();
   Vector3 normalized() const;
   // magnitude or length of the vector
   float magnitude() const;
   float norm() const;
 
   // rotate v by angle and this axis vector
-  Vector3 rotate(float angle, const Vector3& v) const;
+  Vector3 rotate(float angle, const Vector3 &v) const;
 
   // test circle boundary of this vector
-  bool inside(const Vector3& v, float radius) const;
+  bool inside(const Vector3 &v, float radius) const;
   // test square boundary of this vector
-  bool inside(const Vector3& l, const Vector3& h) const;
+  bool inside(const Vector3 &l, const Vector3 &h) const;
 };
 
 /*------------------------------------------------------------------------------
@@ -77,51 +78,52 @@ class Vector3 {
  * In the implementation i,j and k are ignored, w is a scalar and x,y,z is a
  *vector
  *----------------------------------------------------------------------------*/
-class Quaternion {
- public:
+class Quaternion
+{
+public:
   float w;
   Vector3 v;
 
- public:
+public:
   // constructors
   Quaternion();
-  Quaternion(const Quaternion& q);
-  Quaternion(float w, const Vector3& v);
+  Quaternion(const Quaternion &q);
+  Quaternion(float w, const Vector3 &v);
 
   // moving (add subtract)
-  Quaternion operator+(const Quaternion& q) const;
-  Quaternion operator-(const Quaternion& q) const;
-  Quaternion& operator+=(const Quaternion& q);
-  Quaternion& operator-=(const Quaternion& q);
+  Quaternion operator+(const Quaternion &q) const;
+  Quaternion operator-(const Quaternion &q) const;
+  Quaternion &operator+=(const Quaternion &q);
+  Quaternion &operator-=(const Quaternion &q);
 
   // scaling (multiply divide by scalar)
   Quaternion operator*(float s) const;
   Quaternion operator/(float s) const;
-  Quaternion& operator*=(float s);
-  Quaternion& operator/=(float s);
+  Quaternion &operator*=(float s);
+  Quaternion &operator/=(float s);
 
   // multiply quaternions
-  Quaternion operator*(const Quaternion& q) const;
-  Quaternion operator/(const Quaternion& q) const;
-  Quaternion& operator*=(const Quaternion& q);
+  Quaternion operator*(const Quaternion &q) const;
+  Quaternion operator/(const Quaternion &q) const;
+  Quaternion &operator*=(const Quaternion &q);
 
   // dot product
-  float dot(const Quaternion& q) const;
-  float operator%(const Quaternion& q) const;
+  float dot(const Quaternion &q) const;
+  float operator%(const Quaternion &q) const;
 
   // inverse
-  Quaternion& inverse();
+  Quaternion &inverse();
   Quaternion inversed() const;
   // get conjugate (negative imaginary part)
-  Quaternion& conjugate();
+  Quaternion &conjugate();
   Quaternion conjugated() const;
   // unit quaternion
-  Quaternion& normalize();
+  Quaternion &normalize();
   Quaternion normalized() const;
   // magnitude or length of the quaterion
   float magnitude() const;
   float norm() const;
   // rotate v by quaternion
-  Vector3 rotate(const Vector3& v) const;
+  Vector3 rotate(const Vector3 &v) const;
 };
 #endif

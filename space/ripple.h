@@ -11,11 +11,8 @@ private:
     Timer timer_running;
     // Speed of the ripple
     float runTime;
-    
+
 public:
-
-    
-
     void init()
     {
         state = state_t::RUNNING;

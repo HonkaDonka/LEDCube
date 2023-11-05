@@ -14,6 +14,7 @@ private:
     // Number of debris created on explosion
     uint16_t numDebris;
 
+    // Source and target for the missile
     Vector3 source;
 
     Vector3 target;
@@ -23,6 +24,7 @@ private:
     Vector3 gravity;
 
     Particle missile;
+    
     // Max number of debris
     Particle debris[50];
 
@@ -31,9 +33,6 @@ private:
     Noise noise;
 
 public:
-
-    
-
     void init()
     {
         state = state_t::RUNNING;
@@ -136,7 +135,7 @@ public:
             {
                 state = state_t::ENDING;
             }
-            
+
             if (visible == 0)
             {
                 if (state == state_t::ENDING)

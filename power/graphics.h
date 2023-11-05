@@ -20,7 +20,8 @@
 extern Adafruit_NeoMatrix cube;
 
 // Task states for animations
-enum class state_t : uint8_t{
+enum class state_t : uint8_t
+{
   INACTIVE = 0,
   STARTING = 1,
   RUNNING = 2,
@@ -29,13 +30,13 @@ enum class state_t : uint8_t{
 
 class Graphics
 {
-    public:
-        virtual void init();
-        virtual void draw(float dt);
-        virtual void end();
-        state_t state;
-        void setLED(int x, int y, int z, Color mycolor);
-        void setLED(Vector3 coords, Color mycolor);
-
+public:
+  String *animName;
+  virtual void init();
+  virtual void draw(float dt);
+  virtual void end();
+  state_t state;
+  void setLED(int x, int y, int z, Color mycolor);
+  void setLED(Vector3 coords, Color mycolor);
 };
 #endif

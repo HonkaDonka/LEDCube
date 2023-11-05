@@ -10,14 +10,14 @@ class Text : public Graphics
 private:
     // Time between each frame
     Timer timer_interval;
-    // Time the animation lasts
-    Timer timer_running;
 
-    String text = "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT";
+    String text = "HELLO WORLD!";
+
     // Current state of the animation
     int text_index;
     int x_offset;
     bool add_blank = false;
+
     // Store all the colors for each pixel
     Color colors[5][5][5];
 
@@ -25,7 +25,6 @@ public:
     void init()
     {
         state = state_t::STARTING;
-        timer_running = 30;
         text_index = 0;
         x_offset = 0;
         timer_interval = 0.125;
@@ -36,7 +35,8 @@ public:
         if (timer_interval.update())
         {
             // Add a blank after every new letter
-            if (add_blank == false) {
+            if (add_blank == false)
+            {
                 // Clear everything in the back of the cube
                 for (uint8_t y = 0; y < 5; y++)
                 {
@@ -47,6 +47,7 @@ public:
                 set_line();
                 rotate_matrix();
 
+                // Reset the index and offset if the text is finished
                 if (x_offset + 1 >= 5)
                 {
                     x_offset = 0;
@@ -65,7 +66,9 @@ public:
                 {
                     x_offset++;
                 }
-            } else {
+            }
+            else
+            {
                 rotate_matrix();
                 add_blank = false;
             }
@@ -79,7 +82,7 @@ public:
             uint32_t data = chars_data[match_char(text[text_index])][y * CHARS_FRAME_WIDTH + x_offset];
             if (data & 0xff000000)
             {
-                Color c = Color(255, 255, 255);
+                Color c = Color(0, 255, 255);
 
                 // Flip the y coordinate so that it is upright
                 Vector3 pixel = Vector3(4, 4, -y + 4);
