@@ -13,7 +13,7 @@ private:
     // Time the animation lasts
     Timer timer_running;
 
-    String text = "HELLO WORLD!  ";
+    String text = "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT";
     // Current state of the animation
     int text_index;
     int x_offset;
@@ -28,7 +28,7 @@ public:
         timer_running = 30;
         text_index = 0;
         x_offset = 0;
-        timer_interval = 0.2;
+        timer_interval = 0.125;
     }
 
     void draw(float dt)
