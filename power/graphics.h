@@ -31,7 +31,6 @@ enum class state_t : uint8_t
 class Graphics
 {
 public:
-  String *animName;
   virtual void init();
   virtual void draw(float dt);
   virtual void end();

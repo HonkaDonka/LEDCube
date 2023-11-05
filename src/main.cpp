@@ -107,6 +107,7 @@ void playNext()
 
   if (animation.state == state_t::INACTIVE)
   {
+    // Blynk.virtualWrite(CURRANIMPIN, animationName);
     animation.init();
   }
 }
