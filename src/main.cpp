@@ -29,6 +29,18 @@ const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
 
 uint8_t currentAnim = 0;
 
+struct anim_det_t {
+  const char* name;
+  Graphics* object;
+};
+
+const anim_det_t anim_table[] = {
+  {"TWINKLES", &twinkle},
+  {"PLASMA", &plasma},
+  {"RIPPLES", &ripple},
+  {"FIREWORKS", &firework},
+};
+
 void playNext();
 void skipAnim();
 void backAnim();
@@ -103,12 +115,12 @@ void playNext()
     currentAnim++;
   }
 
-  Graphics &animation = *Animations[currentAnim];
+  anim_det_t animdet = anim_table[currentAnim];
 
-  if (animation.state == state_t::INACTIVE)
+  if (animdet.object->state == state_t::INACTIVE)
   {
-    // Blynk.virtualWrite(CURRANIMPIN, animationName);
-    animation.init();
+    Blynk.virtualWrite(CURRANIMPIN, animdet.name);
+    animdet.object->init();
   }
 }
 
