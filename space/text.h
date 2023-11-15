@@ -18,6 +18,8 @@ private:
     int x_offset;
     bool add_blank = false;
 
+    Color curCol;
+
     // Store all the colors for each pixel
     Color colors[5][5][5];
 
@@ -83,7 +85,7 @@ public:
             uint32_t data = chars_data[match_char(text[text_index])][y * CHARS_FRAME_WIDTH + x_offset];
             if (data & 0xff000000)
             {
-                Color c = Color(0, 255, 255);
+                Color c = curCol;
 
                 // Flip the y coordinate so that it is upright
                 Vector3 pixel = Vector3(4, 4, -y + 4);
@@ -164,6 +166,8 @@ public:
     }
 
     void set_text(String s) { text = s + "  "; }
+    
+    void set_color(Color c) { curCol = c; }
 
     uint16_t match_char(uint16_t chr)
     {

@@ -66,6 +66,10 @@ char pass[] = WIFI_PASS;
 #define CUBEBRIGHT V4
 #define TEXTRGB V5
 
+// Misc
+int runTime = 0;
+int cubeBrightness = 20;
+
 void setup()
 {
   WiFi.begin(ssid, pass);
@@ -83,14 +87,26 @@ void setup()
   cube.clear();
 
   text.init();
+  text.set_color(Color::WHITE);
 
   waitForSync();
   local.setLocation(F(TIMEZONE));
   timer.setInterval(1000, getTime);
+
+  Blynk.virtualWrite(CURRANIMPIN, anim_table[currentAnim].name);
+  Blynk.virtualWrite(CUBEBRIGHT, cubeBrightness);
+  Blynk.virtualWrite(TIMEMODEPIN, 0);
+  Blynk.virtualWrite(TEXTRGB, 255, 255, 255);
 }
 
 void loop()
 {
+  if (millis() - runTime * 1000 > 1000)
+  {
+    runTime = millis()/1000;
+    Blynk.virtualWrite(RUNTIMEPIN, runTime);
+  }
+
   Blynk.run();
   timer.run();
 
@@ -215,4 +231,19 @@ BLYNK_WRITE(TIMEMODEPIN)
     Blynk.virtualWrite(CURRANIMPIN, anim_table[currentAnim].name);
     isTimeMode = false;
   }
+}
+
+BLYNK_WRITE(CUBEBRIGHT)
+{
+  cubeBrightness = param.asInt();
+  cube.setBrightness(cubeBrightness);
+}
+
+BLYNK_WRITE(TEXTRGB)
+{
+  int r = param[0].asInt();
+  int g = param[1].asInt();
+  int b = param[2].asInt();
+
+  text.set_color(Color(r, g, b));
 }
