@@ -50,6 +50,7 @@ void backAnim();
 // Time Display
 Timezone local;
 BlynkTimer timer;
+bool isTimeMode = false;
 
 void getTime();
 
@@ -61,6 +62,9 @@ char pass[] = WIFI_PASS;
 #define TIMEMODEPIN V0
 #define PLAYERPIN V1
 #define CURRANIMPIN V2
+#define RUNTIMEPIN V3
+#define CUBEBRIGHT V4
+#define TEXTRGB V5
 
 void setup()
 {
@@ -90,25 +94,31 @@ void loop()
   Blynk.run();
   timer.run();
 
-  uint8_t activeAnims = 0;
-
-  for (int i = 0; i < numAnimations; i++)
+  if (!isTimeMode)
   {
-    Graphics &animation = *Animations[i];
-    if (animation.state != state_t::INACTIVE)
+    uint8_t activeAnims = 0;
+
+    for (int i = 0; i < numAnimations; i++)
     {
-      animation.draw(0.05);
+      Graphics &animation = *Animations[i];
+      if (animation.state != state_t::INACTIVE)
+      {
+        animation.draw(0.05);
+      }
+
+      if (animation.state != state_t::INACTIVE)
+      {
+        activeAnims++;
+      }
     }
 
-    if (animation.state != state_t::INACTIVE)
+    if (activeAnims == 0)
     {
-      activeAnims++;
+      playNext();
     }
-  }
-
-  if (activeAnims == 0)
-  {
-    playNext();
+  } else {
+    
+    text.draw(0.05);
   }
 
   cube.show();
@@ -168,7 +178,7 @@ void backAnim()
 
 void getTime()
 {
-  text.set_text(local.hour() + ":" + local.minute());
+  text.set_text(local.dateTime("H:i"));
 }
 
 BLYNK_WRITE(PLAYERPIN)
@@ -190,5 +200,19 @@ BLYNK_WRITE(PLAYERPIN)
   else if (value == "next")
   {
     skipAnim();
+  }
+}
+
+BLYNK_WRITE(TIMEMODEPIN)
+{
+  if (param.asInt())
+  {
+    Blynk.virtualWrite(CURRANIMPIN, "TIME");
+    isTimeMode = true;
+  }
+  else
+  {
+    Blynk.virtualWrite(CURRANIMPIN, anim_table[currentAnim].name);
+    isTimeMode = false;
   }
 }
