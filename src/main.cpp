@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <BlynkSimpleEsp32.h>
+#include <ezTime.h>
 
 #include <../power/math8.h>
 #include <../power/color.h>
@@ -29,6 +30,7 @@ const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
 
 uint8_t currentAnim = 0;
 
+// Animation Table
 struct anim_det_t {
   const char* name;
   Graphics* object;
@@ -45,15 +47,20 @@ void playNext();
 void skipAnim();
 void backAnim();
 
+// Time Display
+Timezone local;
+BlynkTimer timer;
+
+void getTime();
+
 // Blynk Platform & WiFi
 char auth[] = BLYNK_AUTH_TOKEN;
 char ssid[] = WIFI_SSID;
 char pass[] = WIFI_PASS;
 
-#define SKIPPIN V0
-#define BACKPIN V1
-#define PLAYERPIN V2
-#define CURRANIMPIN V3
+#define TIMEMODEPIN V0
+#define PLAYERPIN V1
+#define CURRANIMPIN V2
 
 void setup()
 {
@@ -64,7 +71,7 @@ void setup()
   Blynk.config(auth);
   Blynk.connect();
 
-  // Serial.begin(9600);
+  Serial.begin(9600);
   // while (!Serial){}
 
   cube.begin();
@@ -72,11 +79,16 @@ void setup()
   cube.clear();
 
   text.init();
+
+  waitForSync();
+  local.setLocation(F(TIMEZONE));
+  timer.setInterval(1000, getTime);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 
   uint8_t activeAnims = 0;
 
@@ -98,8 +110,6 @@ void loop()
   {
     playNext();
   }
-
-  // text.draw(0.5);
 
   cube.show();
 }
@@ -154,6 +164,11 @@ void backAnim()
   {
     currentAnim -= 2;
   }
+}
+
+void getTime()
+{
+  text.set_text(local.hour() + ":" + local.minute());
 }
 
 BLYNK_WRITE(PLAYERPIN)

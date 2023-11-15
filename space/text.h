@@ -32,6 +32,7 @@ public:
 
     void draw(float dt)
     {
+        state = state_t::RUNNING;
         if (timer_interval.update())
         {
             // Add a blank after every new letter
@@ -179,7 +180,8 @@ public:
 
     void end()
     {
-        state = state_t::ENDING;
+        cube.clear();
+        state = state_t::INACTIVE;
     }
 };
 #endif
