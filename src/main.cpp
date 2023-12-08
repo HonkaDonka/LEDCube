@@ -31,16 +31,17 @@ const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
 uint8_t currentAnim = 0;
 
 // Animation Table
-struct anim_det_t {
-  const char* name;
-  Graphics* object;
+struct anim_det_t
+{
+  const char *name;
+  Graphics *object;
 };
 
 const anim_det_t anim_table[] = {
-  {"TWINKLES", &twinkle},
-  {"PLASMA", &plasma},
-  {"RIPPLES", &ripple},
-  {"FIREWORKS", &firework},
+    {"TWINKLES", &twinkle},
+    {"PLASMA", &plasma},
+    {"RIPPLES", &ripple},
+    {"FIREWORKS", &firework},
 };
 
 void playNext();
@@ -101,14 +102,14 @@ void setup()
 
 void loop()
 {
-  if (millis() - runTime * 1000 > 1000)
-  {
-    runTime = millis()/1000;
-    Blynk.virtualWrite(RUNTIMEPIN, runTime);
-  }
-
   Blynk.run();
   timer.run();
+
+  if (millis() - runTime * 1000 > 1000)
+  {
+    runTime = millis() / 1000;
+    Blynk.virtualWrite(RUNTIMEPIN, runTime);
+  }
 
   if (!isTimeMode)
   {
@@ -132,8 +133,9 @@ void loop()
     {
       playNext();
     }
-  } else {
-    
+  }
+  else
+  {
     text.draw(0.05);
   }
 
@@ -194,7 +196,10 @@ void backAnim()
 
 void getTime()
 {
-  text.set_text(local.dateTime("H:i"));
+  if (isTimeMode)
+  {
+    text.set_text(local.dateTime("g:i A"));
+  }
 }
 
 BLYNK_WRITE(PLAYERPIN)
@@ -211,11 +216,17 @@ BLYNK_WRITE(PLAYERPIN)
   }
   else if (value == "prev")
   {
-    backAnim();
+    if (!isTimeMode)
+    {
+      backAnim();
+    }
   }
   else if (value == "next")
   {
-    skipAnim();
+    if (!isTimeMode)
+    {
+      skipAnim();
+    }
   }
 }
 
