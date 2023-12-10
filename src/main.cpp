@@ -11,20 +11,22 @@
 #include <../power/graphics.h>
 #include <../power/particle.h>
 
+#include <../space/text.h>
 #include <../space/twinkle.h>
 #include <../space/ripple.h>
 #include <../space/firework.h>
 #include <../space/plasma.h>
-#include <../space/text.h>
+#include <../space/rainfall.h>
 
 // Animations
+Text text;
 Twinkle twinkle;
 Ripple ripple;
 Firework firework;
 Plasma plasma;
-Text text;
+Rainfall rainfall;
 
-Graphics *Animations[] = {&twinkle, &plasma, &ripple, &firework};
+Graphics *Animations[] = {&twinkle, &plasma, &firework, &rainfall, &ripple};
 
 const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
 
@@ -40,8 +42,9 @@ struct anim_det_t
 const anim_det_t anim_table[] = {
     {"TWINKLES", &twinkle},
     {"PLASMA", &plasma},
-    {"RIPPLES", &ripple},
     {"FIREWORKS", &firework},
+    {"RAINFALL", &rainfall},
+    {"RIPPLES", &ripple},
 };
 
 void playNext();
@@ -98,6 +101,7 @@ void setup()
   Blynk.virtualWrite(CUBEBRIGHT, cubeBrightness);
   Blynk.virtualWrite(TIMEMODEPIN, 0);
   Blynk.virtualWrite(TEXTRGB, 255, 255, 255);
+
 }
 
 void loop()
@@ -144,7 +148,7 @@ void loop()
 
 void playNext()
 {
-  if (currentAnim + 1 >= numAnimations)
+  if (currentAnim >= numAnimations - 1)
   {
     currentAnim = 0;
   }

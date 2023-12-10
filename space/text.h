@@ -37,6 +37,7 @@ public:
         state = state_t::RUNNING;
         if (timer_interval.update())
         {
+            timer_interval.reset();
             // Add a blank after every new letter
             if (add_blank == false)
             {
