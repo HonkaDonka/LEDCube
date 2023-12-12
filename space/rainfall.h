@@ -54,7 +54,7 @@ public:
                     raindrops[x][y].brightness = 0;
                     activedrops--;
                 }
-                setLED(raindrops[x][y].position.x, raindrops[x][y].position.z, raindrops[x][y].position.y, Color(0, 0, 100));
+                setLED(raindrops[x][y].position.x, raindrops[x][y].position.z, raindrops[x][y].position.y, Color(83, 120, 158));
             }
         }
 

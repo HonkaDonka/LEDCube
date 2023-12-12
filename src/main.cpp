@@ -47,6 +47,7 @@ const anim_det_t anim_table[] = {
     {"RIPPLES", &ripple},
 };
 
+// Animation Player Functions
 void playNext();
 void skipAnim();
 void backAnim();
@@ -71,6 +72,7 @@ char pass[] = WIFI_PASS;
 #define TEXTRGB V5
 
 // Misc
+bool loopAnim = false;
 int runTime = 0;
 int cubeBrightness = 20;
 
