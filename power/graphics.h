@@ -35,6 +35,7 @@ public:
   virtual void draw(float dt);
   virtual void end();
   state_t state;
+  
   void setLED(int x, int y, int z, Color mycolor);
   void setLED(Vector3 coords, Color mycolor);
 };

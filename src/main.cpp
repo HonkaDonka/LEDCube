@@ -79,14 +79,13 @@ int cubeBrightness = 20;
 void setup()
 {
   WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-  }
+  while (WiFi.status() != WL_CONNECTED) {}
+
   Blynk.config(auth);
   Blynk.connect();
 
   Serial.begin(9600);
-  // while (!Serial){}
+  // while (!Serial) {}
 
   cube.begin();
   cube.setBrightness(20);
@@ -103,13 +102,17 @@ void setup()
   Blynk.virtualWrite(CUBEBRIGHT, cubeBrightness);
   Blynk.virtualWrite(TIMEMODEPIN, 0);
   Blynk.virtualWrite(TEXTRGB, 255, 255, 255);
-
 }
 
 void loop()
 {
   Blynk.run();
   timer.run();
+
+  if (!Blynk.connected())
+  {
+    Blynk.connect();
+  }
 
   if (millis() - runTime * 1000 > 1000)
   {
@@ -214,11 +217,17 @@ BLYNK_WRITE(PLAYERPIN)
 
   if (value == "play")
   {
-    Serial.println("'play' button pressed");
+    if (!isTimeMode)
+    {
+      loopAnim = false;
+    }
   }
   else if (value == "stop")
   {
-    Serial.println("'stop' button pressed");
+    if (!isTimeMode)
+    {
+      loopAnim = true;
+    }
   }
   else if (value == "prev")
   {

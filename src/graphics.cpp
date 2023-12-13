@@ -1,5 +1,6 @@
 #include "../power/graphics.h"
 #include "../power/color.h"
+#include "../power/timer.h"
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
