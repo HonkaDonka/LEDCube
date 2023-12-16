@@ -32,7 +32,7 @@ class Graphics
 {
 public:
   virtual void init();
-  virtual void draw(float dt);
+  virtual void draw(float dt, bool loop = false);
   virtual void end();
   state_t state;
   

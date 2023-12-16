@@ -59,7 +59,7 @@ public:
         cube.clear();
     }
 
-    void draw(float dt)
+    void draw(float dt, bool loop = false)
     {
         uint8_t brightness = 255;
 
@@ -131,7 +131,7 @@ public:
                 setLED(debris[i].position.x, debris[i].position.z, debris[i].position.y, c);
             }
 
-            if (timer_running.update())
+            if (timer_running.update() && !loop)
             {
                 state = state_t::ENDING;
             }

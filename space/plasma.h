@@ -55,7 +55,7 @@ public:
         speed_offset_speed = 0.002 / 50;
     }
 
-    void draw(float dt)
+    void draw(float dt, bool loop = false)
     {
         uint8_t brightness = 255;
 
@@ -73,7 +73,7 @@ public:
                 timer_ending.reset();
             }
         }
-        if (state == state_t::ENDING) {
+        if (state == state_t::ENDING && !loop) {
             if (timer_ending.update()) {
                 state = state_t::INACTIVE;
                 cube.clear();

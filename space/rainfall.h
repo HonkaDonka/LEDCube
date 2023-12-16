@@ -30,7 +30,7 @@ public:
         activedrops = 0;
     }
 
-    void draw(float dt)
+    void draw(float dt, bool loop = false)
     {
         uint8_t brightness = 255;
 
@@ -68,7 +68,7 @@ public:
             activedrops++;
         }
 
-        if (timer_running.update())
+        if (timer_running.update() && !loop)
         {
             state = state_t::ENDING;
         }

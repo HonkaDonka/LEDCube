@@ -32,7 +32,7 @@ public:
         timer_interval = 0.125;
     }
 
-    void draw(float dt)
+    void draw(float dt, bool loop = false)
     {
         state = state_t::RUNNING;
         if (timer_interval.update())

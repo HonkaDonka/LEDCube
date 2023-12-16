@@ -39,7 +39,7 @@ public:
     timer_running = 20.0;
   }
 
-  void draw(float dt)
+  void draw(float dt, bool loop = false)
   {
 
     uint8_t brightness = 255;
@@ -80,7 +80,7 @@ public:
     }
 
     // If the animation is over, reset the times and colors
-    if (timer_running.update())
+    if (timer_running.update() && !loop)
     {
       state = state_t::ENDING;
     }

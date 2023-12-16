@@ -102,6 +102,7 @@ void setup()
   Blynk.virtualWrite(CUBEBRIGHT, cubeBrightness);
   Blynk.virtualWrite(TIMEMODEPIN, 0);
   Blynk.virtualWrite(TEXTRGB, 255, 255, 255);
+  Blynk.virtualWrite(V1, "play");
 }
 
 void loop()
@@ -129,7 +130,7 @@ void loop()
       Graphics &animation = *Animations[i];
       if (animation.state != state_t::INACTIVE)
       {
-        animation.draw(0.05);
+        animation.draw(0.05, loopAnim);
       }
 
       if (animation.state != state_t::INACTIVE)
@@ -138,10 +139,10 @@ void loop()
       }
     }
 
-    if (activeAnims == 0)
+    if (activeAnims == 0 && !loopAnim)
     {
       playNext();
-    }
+    } 
   }
   else
   {
