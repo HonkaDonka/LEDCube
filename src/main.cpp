@@ -17,6 +17,7 @@
 #include <../space/firework.h>
 #include <../space/plasma.h>
 #include <../space/rainfall.h>
+#include <../space/wave.h>
 
 // Animations
 Text text;
@@ -25,8 +26,9 @@ Ripple ripple;
 Firework firework;
 Plasma plasma;
 Rainfall rainfall;
+Wave wave;
 
-Graphics *Animations[] = {&twinkle, &plasma, &firework, &rainfall, &ripple};
+Graphics *Animations[] = {&twinkle, &plasma, &firework, &rainfall, &ripple, &wave};
 
 const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
 
@@ -45,6 +47,7 @@ const anim_det_t anim_table[] = {
     {"FIREWORKS", &firework},
     {"RAINFALL", &rainfall},
     {"RIPPLES", &ripple},
+    {"WAVES", &wave},
 };
 
 // Animation Player Functions
