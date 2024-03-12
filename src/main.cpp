@@ -28,6 +28,7 @@ Plasma plasma;
 Rainfall rainfall;
 Wave wave;
 
+// Animation Array
 Graphics *Animations[] = {&twinkle, &plasma, &firework, &rainfall, &ripple, &wave};
 
 const uint8_t numAnimations = sizeof(Animations) / sizeof(Graphics *);
@@ -76,20 +77,22 @@ char pass[] = WIFI_PASS;
 
 // Misc
 bool loopAnim = false;
-int runTime = 0;
-int cubeBrightness = 20;
+unsigned int runTime = 0;
+unsigned int cubeBrightness = 20;
 
 void setup()
 {
+  // Connect to WiFi and Blynk
   WiFi.begin(ssid, pass);
   while (WiFi.status() != WL_CONNECTED) {}
 
   Blynk.config(auth);
   Blynk.connect();
 
-  Serial.begin(9600);
+  // Serial.begin(9600);
   // while (!Serial) {}
 
+  // Set up the LED Cube & timezone
   cube.begin();
   cube.setBrightness(20);
   cube.clear();
@@ -101,6 +104,7 @@ void setup()
   local.setLocation(F(TIMEZONE));
   timer.setInterval(1000, getTime);
 
+  // Reset Blynk Widgets
   Blynk.virtualWrite(CURRANIMPIN, anim_table[currentAnim].name);
   Blynk.virtualWrite(CUBEBRIGHT, cubeBrightness);
   Blynk.virtualWrite(TIMEMODEPIN, 0);
@@ -117,7 +121,7 @@ void loop()
   {
     Blynk.connect();
   }
-
+  // Update runtime to Blynk every second
   if (millis() - runTime * 1000 > 1000)
   {
     runTime = millis() / 1000;
@@ -126,6 +130,7 @@ void loop()
 
   if (!isTimeMode)
   {
+    // Draw the current animation(s)
     uint8_t activeAnims = 0;
 
     for (int i = 0; i < numAnimations; i++)

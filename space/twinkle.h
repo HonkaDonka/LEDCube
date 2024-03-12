@@ -54,6 +54,7 @@ public:
         {
           if (!colors[x][y][z].isBlack())
           {
+            // Twinkle the pixel
             if (times[x][y][z] < fade_in_speed)
             {
               float t = times[x][y][z] / fade_in_speed;

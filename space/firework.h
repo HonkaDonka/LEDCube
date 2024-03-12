@@ -16,20 +16,15 @@ private:
 
     // Source and target for the missile
     Vector3 source;
-
     Vector3 target;
-
     Vector3 velocity;
-
     Vector3 gravity;
-
     Particle missile;
     
     // Max number of debris
     Particle debris[50];
 
     boolean exploded;
-
     Noise noise;
 
 public:

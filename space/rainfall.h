@@ -40,7 +40,7 @@ public:
         {
             for (uint8_t y = 0; y < 5; y++)
             {
-
+                // If the raindrop is still active, move it
                 if (raindrops[x][y].position.y > -1.0f)
                 {
                     raindrops[x][y].move(dt, gravity);
@@ -57,7 +57,7 @@ public:
                 setLED(raindrops[x][y].position.x, raindrops[x][y].position.z, raindrops[x][y].position.y, Color(83, 120, 158));
             }
         }
-
+        // Create a new raindrop
         if (random(0, 20) < 5 && activedrops < 20 && timer_interval.update() && state != state_t::ENDING)
         {
             uint8_t x = random(0, 5);

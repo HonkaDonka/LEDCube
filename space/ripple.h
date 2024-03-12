@@ -17,12 +17,14 @@ public:
     {
         state = state_t::RUNNING;
         timer_running = 20.0;
+        runTime = 0;
+
     }
 
     void draw(float dt, bool loop = false)
     {
 
-        runTime += 1.0 * 10000 / 1000000;
+        runTime += 1.0 * 1 / 100;
         static int hue16 = 0;
         hue16 += dt * 5 * 255;
 
