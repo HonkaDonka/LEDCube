@@ -3,6 +3,7 @@
 #include <WiFi.h>
 #include <BlynkSimpleEsp32.h>
 #include <ezTime.h>
+#include <ArduinoOTA.h>
 
 #include <../power/math8.h>
 #include <../power/color.h>
@@ -77,12 +78,17 @@ char pass[] = WIFI_PASS;
 // Misc
 bool loopAnim = false;
 int runTime = 0;
-int cubeBrightness = 20;
+int cubeBrightness = 10;
 
 void setup()
 {
   WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED) {}
+  WiFi.setAutoReconnect(true);
+  WiFi.persistent(true);
+  unsigned long t0 = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - t0 < 5000) {
+    delay(100);
+  }
 
   Blynk.config(auth);
   Blynk.connect();
@@ -106,17 +112,21 @@ void setup()
   Blynk.virtualWrite(TIMEMODEPIN, 0);
   Blynk.virtualWrite(TEXTRGB, 255, 255, 255);
   Blynk.virtualWrite(V1, "play");
+
+  ArduinoOTA.setHostname("HonkaCube");
+  ArduinoOTA.begin();
+  Serial.println(WiFi.localIP());
 }
 
 void loop()
 {
+  ArduinoOTA.handle();
   Blynk.run();
   timer.run();
 
-  if (!Blynk.connected())
-  {
-    Blynk.connect();
-  }
+  if (WiFi.status() != WL_CONNECTED) WiFi.reconnect();
+
+  if (!Blynk.connected()) Blynk.connect();
 
   if (millis() - runTime * 1000 > 1000)
   {
