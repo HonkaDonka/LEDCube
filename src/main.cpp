@@ -119,7 +119,7 @@ void setup()
 
   ArduinoOTA.setHostname("HonkaCube");
   ArduinoOTA.begin();
-  Serial.println(WiFi.localIP());
+  // Serial.println(WiFi.localIP());
 }
 
 void loop()
